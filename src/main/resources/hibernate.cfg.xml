@@ -4,21 +4,9 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-    <property name="connection.url">jdbc:mysql://localhost:3306/weathermanager</property>
-    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 
-    <!-- NOTE that after automapping with IDEA property username and password will delete -->
-    <!--and will be:  Initial SessionFactory failedorg.hibernate.service.spi.ServiceException: Unable to create requested service-->
-    <!-- NOTE that after automapping with IDEA property username and password will delete -->
-    <property name="connection.username">root</property>
-    <property name="connection.password">1234</property>
+    <mapping class="weather.data.Forecast"/>
+    <mapping class="weather.data.Location"/>
 
-    <mapping class="weather.date.Forecast"/>
-    <mapping class="weather.date.Location"/>
-
-
-    <!-- DB schema will qbe updated if needed -->
-    <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>
 </hibernate-configuration>

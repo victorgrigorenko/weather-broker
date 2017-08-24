@@ -1,4 +1,4 @@
-package weather.date;
+package weather.data;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -7,14 +7,26 @@ import java.util.Date;
 @Table(name = "FORECAST")
 public class Forecast {
 
+    private Integer id;
     private Integer code;
     private Date date;
     private String day;
     private Integer high;
     private Integer low;
     private String text;
+    private String id_location;
 
-    @Column(name = "code")
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Column(name = "thisCode")
     public Integer getCode() {
         return code;
     }
@@ -60,7 +72,7 @@ public class Forecast {
         this.low = low;
     }
 
-    @Column(name = "text")
+    @Column(name = "description")
     public String getText() {
         return text;
     }
@@ -69,16 +81,12 @@ public class Forecast {
         this.text = text;
     }
 
-
-    private Integer id;
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    public Integer getId() {
-        return id;
+    @Column(name = "id_location")
+    public String getId_location() {
+        return id_location;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setId_location(String id_location) {
+        this.id_location = id_location;
     }
 }

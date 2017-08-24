@@ -1,17 +1,14 @@
-package weather.date;
+package weather.data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "LOCATION")
+@Table(name = "location")
 public class Location {
 
-    @Id
-    private Integer id;
 
+    @Id // если такой город уже есть, то падает, при добавлении
+    //@GeneratedValue(strategy=GenerationType.TABLE)
     @Column(name = "city")
     private String city;
 
@@ -46,12 +43,4 @@ public class Location {
         this.region = region;
     }
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }
