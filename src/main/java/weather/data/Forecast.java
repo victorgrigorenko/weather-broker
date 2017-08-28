@@ -14,7 +14,8 @@ public class Forecast {
     private Integer high;
     private Integer low;
     private String text;
-    private String id_location;
+
+    private Location location;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -81,12 +82,28 @@ public class Forecast {
         this.text = text;
     }
 
-    @Column(name = "id_location")
-    public String getId_location() {
-        return id_location;
+    @ManyToOne
+    @JoinColumn(name = "id_location")
+    public Location getLocation() {
+        return location;
     }
 
-    public void setId_location(String id_location) {
-        this.id_location = id_location;
+    public void setLocation(Location location) {
+        this.location = location;
     }
+
+    @Override
+    public String toString(){
+        return "Forecast{" +
+                "id=" + id +
+                ", thisCode=" + code +
+                ", thisDate=" + date +
+                ", thisDay=" + day +
+                ", high=" + high +
+                ", low=" + low +
+                ", description=" + text +
+                ", id_location=" + getLocation().getCity() +
+                "}";
+    }
+
 }

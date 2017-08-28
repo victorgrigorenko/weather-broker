@@ -19,11 +19,6 @@ abstract class AbstractDao<T,Id> implements AbstarctableDao<T, Id> {
     }
 
     @Override
-    public void update(T entity) {
-        sessionFactory.getCurrentSession().update(entity);
-    }
-
-    @Override
     public void delete(T entity) {
         sessionFactory.getCurrentSession().delete(entity);
     }

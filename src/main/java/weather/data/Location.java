@@ -1,14 +1,16 @@
 package weather.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "location")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Location {
 
-
-    @Id // если такой город уже есть, то падает, при добавлении
-    //@GeneratedValue(strategy=GenerationType.TABLE)
+    @Id
     @Column(name = "city")
     private String city;
 
@@ -17,6 +19,9 @@ public class Location {
 
     @Column(name = "region")
     private String region;
+
+    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    private List<Forecast> forecasts;
 
 
     public String getCity() {
@@ -43,4 +48,21 @@ public class Location {
         this.region = region;
     }
 
+
+    public List<Forecast> getForecasts() {
+        return forecasts;
+    }
+
+    public void setForecasts(List<Forecast> forecasts) {
+        this.forecasts = forecasts;
+    }
+
+    @Override
+    public String toString(){
+        return "Location{" +
+                "city=" + city +
+                ", country=" + country +
+                ", region=" + region +
+                "}";
+    }
 }

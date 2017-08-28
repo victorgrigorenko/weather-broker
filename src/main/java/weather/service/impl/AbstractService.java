@@ -24,10 +24,6 @@ abstract class AbstractService<T,Id> implements AbstractableService<T,Id>{
         return  instance;
     }
 
-    @Transactional
-    public void update(T entity){
-        abstractDao.update(entity);
-    }
 
     @Transactional
     public void delete(T entity){

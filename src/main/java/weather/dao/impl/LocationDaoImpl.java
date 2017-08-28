@@ -10,7 +10,7 @@ class LocationDaoImpl extends AbstractDao<Location, String> {
 
     @Override
     public Location get(String id) {
-        Location location = (Location) sessionFactory.getCurrentSession().get(Location.class, id);
+        Location location = sessionFactory.getCurrentSession().find(Location.class, id);
         return location;
     }
 
