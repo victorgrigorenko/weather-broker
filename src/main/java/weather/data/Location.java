@@ -1,13 +1,10 @@
 package weather.data;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "location")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Location {
 
     @Id
@@ -57,12 +54,43 @@ public class Location {
         this.forecasts = forecasts;
     }
 
+
+    public void addForecast(Forecast forecast) {
+        forecasts.add(forecast);
+        forecast.setLocation(this);
+    }
+
+    public void removeForecast(Forecast forecast) {
+        forecasts.remove(forecast);
+        forecast.setLocation(null);
+    }
+
+
+
     @Override
     public String toString(){
-        return "Location{" +
-                "city=" + city +
-                ", country=" + country +
-                ", region=" + region +
+
+        return "Location{\n" +
+                " city : " + city +
+                ",\n country : " + country +
+                ",\n region : " + region + ",\n"+
+                getForecastsAsText()+
                 "}";
+    }
+
+    private String getForecastsAsText(){
+        StringBuilder forecasts = new StringBuilder(" forecast : [\n");
+        if (this.forecasts != null) {
+            for (Forecast f : this.forecasts) {
+                forecasts.append(" {\n\tcode : " + f.getCode());
+                forecasts.append(",\n\tdate : " + f.getDate());
+                forecasts.append(",\n\tday : " + f.getDay());
+                forecasts.append(",\n\thigh : " + f.getHigh());
+                forecasts.append(",\n\tlow : " + f.getLow());
+                forecasts.append(",\n\ttext : " + f.getText() + "\n }");
+            }
+        }
+        forecasts.append("\n]");
+        return String.valueOf(forecasts);
     }
 }

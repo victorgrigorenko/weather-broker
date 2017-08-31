@@ -7,18 +7,33 @@ import java.util.Date;
 @Table(name = "FORECAST")
 public class Forecast {
 
-    private Integer id;
-    private Integer code;
-    private Date date;
-    private String day;
-    private Integer high;
-    private Integer low;
-    private String text;
-
-    private Location location;
-
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "thisCode")
+    private Integer code;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "thisDate")
+    private Date date;
+
+    @Column(name = "thisDay")
+    private String day;
+
+    @Column(name = "high")
+    private Integer high;
+
+    @Column(name = "low")
+    private Integer low;
+
+    @Column(name = "description")
+    private String text;
+
+    @ManyToOne
+    @JoinColumn(name = "id_location", foreignKey = @ForeignKey(name = "fk_id_location"))
+    private Location location;
+
     public Integer getId() {
         return id;
     }
@@ -27,7 +42,6 @@ public class Forecast {
         this.id = id;
     }
 
-    @Column(name = "thisCode")
     public Integer getCode() {
         return code;
     }
@@ -36,8 +50,6 @@ public class Forecast {
         this.code = code;
     }
 
-    @Temporal(TemporalType.DATE)
-    @Column(name = "thisDate")
     public Date getDate() {
         return date;
     }
@@ -46,7 +58,6 @@ public class Forecast {
         this.date = date;
     }
 
-    @Column(name = "thisDay")
     public String getDay() {
         return day;
     }
@@ -55,7 +66,6 @@ public class Forecast {
         this.day = day;
     }
 
-    @Column(name = "high")
     public Integer getHigh() {
         return high;
     }
@@ -64,7 +74,6 @@ public class Forecast {
         this.high = high;
     }
 
-    @Column(name = "low")
     public Integer getLow() {
         return low;
     }
@@ -73,7 +82,6 @@ public class Forecast {
         this.low = low;
     }
 
-    @Column(name = "description")
     public String getText() {
         return text;
     }
@@ -82,8 +90,6 @@ public class Forecast {
         this.text = text;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "id_location")
     public Location getLocation() {
         return location;
     }

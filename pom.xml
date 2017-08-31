@@ -30,7 +30,6 @@
                     <port>8080</port>
                     <username>admin</username>
                     <password>admin</password>
-                    <!--<name>test.war</name>-->
                     <modules-path>
                         <paths>
                             <path>/opt/WildFly/modules</path>
@@ -55,19 +54,9 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.7.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-xml</artifactId>
-            <version>2.6.3</version>
+            <version>2.9.0</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>javax.persistence</groupId>-->
-            <!--<artifactId>persistence-api</artifactId>-->
-            <!--<version>1.0.2</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
@@ -97,7 +86,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
+            <artifactId>spring-web</artifactId>
             <version>4.3.10.RELEASE</version>
         </dependency>
         <dependency>
@@ -115,30 +104,20 @@
 
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.2.10.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>5.2.10.Final</version>
         </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
-            <version>3.5.6-Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-commons-annotations</artifactId>
-            <version>5.0.0.Final</version>
-        </dependency>
-
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
             <version>1.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.3.6</version>
         </dependency>
     </dependencies>
 
