@@ -59,7 +59,7 @@
     <!-- REST template configuration -->
     <bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
 
-    <!-- Обработчик запроса от Yahoo -->
-    <bean id="handler" class="weather.data.maintenance.QueryHandler"/>
+    <!-- Основной обработчик-->
+    <bean id="handler" class="weather.service.impl.QueryHandlerImpl"/>
 
 </beans>

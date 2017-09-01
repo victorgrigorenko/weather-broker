@@ -1,10 +1,12 @@
-package weather.data.maintenance;
+package weather.service.impl;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
 import weather.data.Forecast;
 import weather.data.Location;
+import weather.service.IParserWeather;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -14,25 +16,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ParserWeather {
-    private static ParserWeather instance;
+@Service("parserWeather")
+class ParserWeatherImpl implements IParserWeather<Location>{
     private ObjectMapper mapper;
 
-    private ParserWeather(){
+    public ParserWeatherImpl(){
         mapper = new ObjectMapper();
     }
 
-    public static ParserWeather getInstance(){
-        if (instance == null){
-            instance = new ParserWeather();
-        }
-        return instance;
-    }
 
-    public Location parseJsonIntoLocationEntity(String jsonString){
+    public Location parseJsonIntoEntity(String json){
         JsonNode root = null;
         try {
-            root = mapper.readTree(jsonString);
+            root = mapper.readTree(json);
         } catch (IOException e) {
             e.printStackTrace();
         }

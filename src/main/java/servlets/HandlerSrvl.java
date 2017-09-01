@@ -1,10 +1,8 @@
 package servlets;
 
-import weather.data.maintenance.QueryHandler;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import weather.data.Location;
-import weather.data.maintenance.ParserWeather;
+import weather.service.IQueryHandler;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -18,10 +16,13 @@ import javax.servlet.ServletException;
 public class HandlerSrvl extends HttpServlet {
     private ApplicationContext ctx;
 
+    private IQueryHandler handler;
+
     @Override
     public void init() throws ServletException {
         super.init();
         ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(this.getServletContext());
+        handler = (IQueryHandler)ctx.getBean("handler");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
@@ -30,19 +31,12 @@ public class HandlerSrvl extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String city = request.getParameter("city");
-
         String status = (handleRequest(city))?"Прогноз сохранен":"Неудача";
         request.setAttribute("status",status);
         getServletContext().getRequestDispatcher("/WEB-INF/views/Start.jsp").forward(request, response);
     }
 
     private boolean handleRequest(String city) {
-        QueryHandler queryHandler = (QueryHandler) ctx.getBean("handler");
-        ParserWeather parserWeather = ParserWeather.getInstance();
-        Location location = parserWeather.parseJsonIntoLocationEntity(queryHandler.createJson(city));
-        if (location == null){
-            return false;
-        }
-        return queryHandler.saveDB(location);
+        return handler.handle(city);
     }
 }
