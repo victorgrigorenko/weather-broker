@@ -62,4 +62,48 @@
     <!-- Основной обработчик-->
     <bean id="handler" class="weather.service.impl.QueryHandlerImpl"/>
 
+
+    <!-- JMS and JNDI -->
+    <bean id="jndiTemplate" class="org.springframework.jndi.JndiTemplate">
+        <property name="environment">
+            <props>
+                <prop key="java.naming.factory.initial">org.jboss.naming.remote.client.InitialContextFactory</prop>
+                <prop key="java.naming.provider.url">http-remoting://localhost:8080</prop>
+                <prop key="java.naming.security.principal">jmsuser</prop>
+                <prop key="java.naming.security.credentials">jmsuser!1</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- Getting Destination and ConnectionFactory using Spring JNDI Template-->
+    <bean id="destination" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiTemplate" ref="jndiTemplate" />
+        <property name="jndiName" value="jms/queue/test2"/>
+    </bean>
+    <bean id="jndiConnectionFactory" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiTemplate" ref="jndiTemplate"/>
+        <property name="jndiName" value="jms/RemoteConnectionFactory"></property>
+    </bean>
+
+    <bean id="queueConnectionFactory" class="org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter">
+        <property name="targetConnectionFactory" ref="jndiConnectionFactory"></property>
+        <property name="username" value="jmsuser"></property>
+        <property name="password" value="jmsuser!1"></property>
+    </bean>
+    <!-- JMS template-->
+    <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <property name="connectionFactory" ref="queueConnectionFactory"></property>
+    </bean>
+
+    <!-- Приемник сообщений и лисенер -->
+    <bean id="messageReciver" class="weather.jms.impl.MessageReceiverImpl"/>
+
+    <bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="queueConnectionFactory"/>
+        <property name="destination" ref="destination"/>
+        <property name="pubSubDomain" value="true"/>
+        <property name="messageListener" ref="messageReciver" />
+    </bean>
+
+    <bean id="messageConverter" class="org.springframework.jms.support.converter.SimpleMessageConverter"/>
+
 </beans>

@@ -1,11 +1,12 @@
 package weather.data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
 @Table(name = "FORECAST")
-public class Forecast {
+public class Forecast implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

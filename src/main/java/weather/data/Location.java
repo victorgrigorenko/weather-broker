@@ -1,11 +1,12 @@
 package weather.data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "location")
-public class Location {
+public class Location implements Serializable {
 
     @Id
     @Column(name = "city")

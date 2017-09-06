@@ -1,7 +1,9 @@
 package servlets;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import weather.jms.IMessageSender;
 import weather.service.IQueryHandler;
 
 import java.io.IOException;

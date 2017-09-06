@@ -1,11 +1,10 @@
 package weather.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import weather.data.Location;
-import weather.service.AbstractableService;
+import weather.jms.IMessageSender;
 import weather.service.IParserWeather;
 import weather.service.IQueryHandler;
 import weather.service.IUriGenerator;
@@ -22,19 +21,12 @@ public class QueryHandlerImpl implements IQueryHandler{
     @Autowired
     private IParserWeather<Location> parserWeather;
 
-    @Autowired(required = true)
-    @Qualifier("locationService")
-    private AbstractableService<Location,String> locationService;
-
+    @Autowired
+    IMessageSender sender;
 
     private String createJson(String city){
         String uri = uriRequest.createURI(city);
         return restTemplate.getForObject(uri, String.class);
-    }
-
-    private boolean saveDB(Location location){
-        locationService.saveToDatabase(location);
-        return true;
     }
 
     @Override
@@ -43,6 +35,7 @@ public class QueryHandlerImpl implements IQueryHandler{
         if (location == null){
             return false;
         }
-        return saveDB(location);
+        sender.send(location);
+        return true;
     }
 }
