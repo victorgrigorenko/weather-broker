@@ -2,6 +2,7 @@ package weather.data;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,7 +19,9 @@ public class Location implements Serializable {
     @Column(name = "region")
     private String region;
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "id_location")
     private List<Forecast> forecasts;
 
 
@@ -58,7 +61,7 @@ public class Location implements Serializable {
 
     public void addForecast(Forecast forecast) {
         forecasts.add(forecast);
-        forecast.setLocation(this);
+        forecast.setLocation(this.getCity());
     }
 
     public void removeForecast(Forecast forecast) {

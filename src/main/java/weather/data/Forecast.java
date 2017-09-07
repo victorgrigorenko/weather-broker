@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "FORECAST")
+@Table(name = "forecast")
 public class Forecast implements Serializable {
 
     @Id
@@ -31,9 +31,11 @@ public class Forecast implements Serializable {
     @Column(name = "description")
     private String text;
 
-    @ManyToOne
-    @JoinColumn(name = "id_location", foreignKey = @ForeignKey(name = "fk_id_location"))
-    private Location location;
+//    @ManyToOne
+//    @JoinColumn(name = "id_location")//, foreignKey = @ForeignKey(name = "fk_id_location"))
+//    private Location location;
+    @Column(name = "id_location")//, foreignKey = @ForeignKey(name = "fk_id_location"))
+    private String location;
 
     public Integer getId() {
         return id;
@@ -91,11 +93,11 @@ public class Forecast implements Serializable {
         this.text = text;
     }
 
-    public Location getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
@@ -109,7 +111,7 @@ public class Forecast implements Serializable {
                 ", high=" + high +
                 ", low=" + low +
                 ", description=" + text +
-                ", id_location=" + getLocation().getCity() +
+                ", city=" + getLocation()+//.getCity() +
                 "}";
     }
 

@@ -18,7 +18,7 @@ abstract class AbstractService<T,Id> implements AbstractableService<T,Id>{
         abstractDao.saveToDatabase(entity);
     }
 
-    @Transactional// закоментить и поставить аннотации на DAO
+    @Transactional
     public T get(Id id){
         T instance = abstractDao.get(id);
         return  instance;

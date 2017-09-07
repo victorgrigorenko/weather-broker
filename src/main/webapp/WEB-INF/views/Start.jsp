@@ -26,6 +26,7 @@
                 <button type="submit" class="btn btn-default">Отправить</button>
             </form>
             <p><c:out value="${status}"></c:out></p>
+            <p><c:out value="${cityInfo}"></c:out></p>
         </div>
     </body>
 </html>

@@ -65,7 +65,7 @@ class ParserWeatherImpl implements IParserWeather<Location>{
             forecast.setHigh(node.path("high").asInt());
             forecast.setLow(node.path("low").asInt());
             forecast.setText(node.path("text").asText());
-            forecast.setLocation(location);
+            forecast.setLocation(location.getCity());
             list.add(forecast);
         }
         location.setForecasts(list);
