@@ -7,30 +7,24 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.OngoingStubbing;
+import org.mockito.Spy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 import weather.data.Location;
 import weather.jms.IMessageSender;
 import weather.service.impl.QueryHandlerImpl;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:**/test-root-context.xml"})
 public class TestQueryHandler {
 
@@ -38,9 +32,10 @@ public class TestQueryHandler {
     private RestTemplate mockRestTemplate;
 
     @Mock
-    private IUriGenerator testUriRequest;
+    private IUriGenerator mockUriRequest;
 
-    @Mock
+    @Spy
+    @Autowired
     private IParserWeather<Location> testParserWeather;
 
     @Mock
@@ -49,9 +44,10 @@ public class TestQueryHandler {
     @InjectMocks
     QueryHandlerImpl testQueryHandlerImpl;
 
+    @Autowired
+    Location exampleLocation;
 
     private static String json, uri;
-
 
     @Test
     public void testHandleWithArgumentNull(){
@@ -59,22 +55,27 @@ public class TestQueryHandler {
     }
 
     @Test
-    public void testHandleWithCorrectArgument() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Method method = testQueryHandlerImpl.getClass().getDeclaredMethod("createJson", String.class);
-        method.setAccessible(true);
-        when(method.invoke(testQueryHandlerImpl,"Saratov")).thenReturn(json);
-        when(testParserWeather.parseJsonIntoEntity(json)).thenReturn(new Location());
-        doNothing().when(mockSender).send(any(Location.class));
-        testQueryHandlerImpl.handle("Saratov");
-        verify(mockSender, atLeastOnce()).send(any(Location.class));
+    public void testHandleWithCorrectArgument(){
+        String city = "Saratov";
+        when(mockUriRequest.createURI(city)).thenReturn(uri);
+        when(mockRestTemplate.getForObject(uri, String.class)).thenReturn(json);
+
+        testQueryHandlerImpl.handle(city);
+
+        verify(testParserWeather).parseJsonIntoEntity(json);
+        assertEquals(testParserWeather.parseJsonIntoEntity(json),exampleLocation);
+        verify(mockSender).send(exampleLocation);
     }
 
+    @Before
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @BeforeClass
     public static void initJsonString() throws IOException {
         Path path = Paths.get("src/test/resources/testJSON.txt");
         json = new String(Files.readAllBytes(path));
         uri = new String("https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"Saratov\")&format=json&env=store://datatables.org/alltableswithkeys");
-
-    }
+   }
 }
