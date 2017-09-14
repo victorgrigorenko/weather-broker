@@ -3,6 +3,7 @@ package weather.data;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Entity
@@ -70,6 +71,40 @@ public class Location implements Serializable {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Location location = (Location) o;
+
+        if (city != null ? !city.equals(location.city) : location.city != null) return false;
+        if (country != null ? !country.equals(location.country) : location.country != null) return false;
+        if (region != null ? !region.equals(location.region) : location.region != null) return false;
+        if (region != null ? !region.equals(location.region) : location.region != null) return false;
+        if (forecasts == location.getForecasts())return true;
+        if ((forecasts == null && location.getForecasts() != null)
+                || (forecasts != null && location.getForecasts() == null)) return false;
+        if (forecasts != null && location.getForecasts() != null ? forecasts.size() != location.getForecasts().size() : true) return false;
+        if (forecasts.size() !=  location.getForecasts().size()) return false;
+        Iterator<Forecast> thisIt = forecasts.iterator();
+        Iterator<Forecast> argIt = location.getForecasts().iterator();
+        while(thisIt.hasNext() && argIt.hasNext()){
+            Forecast thisItem = thisIt.next();
+            Forecast argItem = argIt.next();
+            if (thisItem != null ? !thisItem.equals(argItem): argItem != null) return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = city != null ? city.hashCode() : 0;
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        result = 31 * result + (region != null ? region.hashCode() : 0);
+        result = 31 * result + (forecasts != null ? forecasts.hashCode() : 0);
+        return result;
+    }
 
     @Override
     public String toString(){

@@ -1,0 +1,85 @@
+{
+ "query": {
+  "count": 1,
+  "created": "2017-09-11T10:32:51Z",
+  "lang": "ru-RU",
+  "results": {
+   "channel": {
+    "units": {
+     "distance": "mi",
+     "pressure": "in",
+     "speed": "mph",
+     "temperature": "F"
+    },
+    "title": "Yahoo! Weather - Saratov, Saratov Oblast, RU",
+    "link": "http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-2123272/",
+    "description": "Yahoo! Weather for Saratov, Saratov Oblast, RU",
+    "language": "en-us",
+    "lastBuildDate": "Mon, 11 Sep 2017 01:32 PM MSK",
+    "ttl": "60",
+    "location": {
+     "city": "Saratov",
+     "country": "Russia",
+     "region": "Saratov Oblast"
+    },
+    "wind": {
+     "chill": "68",
+     "direction": "225",
+     "speed": "7"
+    },
+    "atmosphere": {
+     "humidity": "50",
+     "pressure": "1012.0",
+     "rising": "0",
+     "visibility": "16.1"
+    },
+    "astronomy": {
+     "sunrise": "5:25 am",
+     "sunset": "6:19 pm"
+    },
+    "image": {
+     "title": "Yahoo! Weather",
+     "width": "142",
+     "height": "18",
+     "link": "http://weather.yahoo.com",
+     "url": "http://l.yimg.com/a/i/brand/purplelogo//uh/us/news-wea.gif"
+    },
+    "item": {
+     "title": "Conditions for Saratov, Saratov Oblast, RU at 12:00 PM MSK",
+     "lat": "51.54332",
+     "long": "45.959949",
+     "link": "http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-2123272/",
+     "pubDate": "Mon, 11 Sep 2017 12:00 PM MSK",
+     "condition": {
+      "code": "32",
+      "date": "Mon, 11 Sep 2017 12:00 PM MSK",
+      "temp": "69",
+      "text": "Sunny"
+     },
+     "forecast": [
+      {
+       "code": "34",
+       "date": "11 Sep 2017",
+       "day": "Mon",
+       "high": "71",
+       "low": "52",
+       "text": "Mostly Sunny"
+      },
+      {
+       "code": "34",
+       "date": "12 Sep 2017",
+       "day": "Tue",
+       "high": "74",
+       "low": "57",
+       "text": "Mostly Sunny"
+      }
+     ],
+     "description": "<![CDATA[<img src=\"http://l.yimg.com/a/i/us/we/52/32.gif\"/>\n<BR />\n<b>Current Conditions:</b>\n<BR />Sunny\n<BR />\n<BR />\n<b>Forecast:</b>\n<BR /> Mon - Mostly Sunny. High: 71Low: 52\n<BR /> Tue - Mostly Sunny. High: 74Low: 57\n<BR /> Wed - Sunny. High: 75Low: 57\n<BR /> Thu - Scattered Thunderstorms. High: 76Low: 58\n<BR /> Fri - Sunny. High: 74Low: 56\n<BR />\n<BR />\n<a href=\"http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-2123272/\">Full Forecast at Yahoo! Weather</a>\n<BR />\n<BR />\n<BR />\n]]>",
+     "guid": {
+      "isPermaLink": "false"
+     }
+    }
+   }
+  }
+ }
+}

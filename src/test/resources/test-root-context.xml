@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- Включаем опцию использования конфигурационных аннотаций (@Annotation-based configuration)-->
+    <context:annotation-config />
+
+
+    <bean id="testUriRequest" class="weather.service.impl.UriGeneratorImpl"/>
+
+    <bean id="testParserWeather" class="weather.service.impl.ParserWeatherImpl"/>
+
+
+
+    <bean id="testLocationDao" class="weather.dao.impl.LocationDaoImpl"/>
+
+    <bean id="testLocationService" class="weather.service.impl.LocationServiceImpl">
+        <constructor-arg ref="testLocationDao"/>
+    </bean>
+
+
+     <!--Настраивает управление транзакциями с помощью аннотации @Transactional-->
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+     <!--Менеджер транзакций-->
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+     <!--Настройки бина dataSource будем хранить в отдельном файле-->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="testJDBC.properties"/>
+    </bean>
+
+     <!--Непосредственно бин dataSource-->
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${testJDBC.connection.driver_class}"/>
+        <property name="url" value="${testJDBC.connection.url}"/>
+        <property name="username" value="${testJDBC.connection.username}"/>
+        <property name="password" value=""/>
+    </bean>
+
+
+     <!--Настройки фабрики сессий Хибернейта-->
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation">
+            <value>classpath:testHibernate.cfg.xml</value>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.show_sql">${testJDBC.show_sql}</prop>
+                <prop key="hibernate.dialect">${testJDBC.dialect}</prop>
+                <prop key="hibernate.connection.charSet">UTF-8</prop>
+            </props>
+        </property>
+    </bean>
+
+    <import resource="test-entities.xml"/>
+
+</beans>
+
+

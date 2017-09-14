@@ -101,6 +101,37 @@ public class Forecast implements Serializable {
         this.location = location;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Forecast forecast = (Forecast) o;
+
+        if (id != null ? !id.equals(forecast.id) : forecast.id != null) return false;
+        if (code != null ? !code.equals(forecast.code) : forecast.code != null) return false;
+        if (date != null ? !date.equals(forecast.date) : forecast.date != null) return false;
+        if (day != null ? !day.equals(forecast.day) : forecast.day != null) return false;
+        if (high != null ? !high.equals(forecast.high) : forecast.high != null) return false;
+        if (low != null ? !low.equals(forecast.low) : forecast.low != null) return false;
+        if (text != null ? !text.equals(forecast.text) : forecast.text != null) return false;
+        return location != null ? location.equals(forecast.location) : forecast.location == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (code != null ? code.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (day != null ? day.hashCode() : 0);
+        result = 31 * result + (high != null ? high.hashCode() : 0);
+        result = 31 * result + (low != null ? low.hashCode() : 0);
+        result = 31 * result + (text != null ? text.hashCode() : 0);
+        result = 31 * result + (location != null ? location.hashCode() : 0);
+        return result;
+    }
+
     @Override
     public String toString(){
         return "Forecast{" +
@@ -114,5 +145,4 @@ public class Forecast implements Serializable {
                 ", city=" + getLocation()+//.getCity() +
                 "}";
     }
-
 }

@@ -26,6 +26,7 @@ class ParserWeatherImpl implements IParserWeather<Location>{
 
 
     public Location parseJsonIntoEntity(String json){
+        if (json == null || json.isEmpty()) return null;
         JsonNode root = null;
         try {
             root = mapper.readTree(json);

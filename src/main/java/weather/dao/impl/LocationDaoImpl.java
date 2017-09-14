@@ -1,6 +1,7 @@
 package weather.dao.impl;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import weather.data.Location;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 class LocationDaoImpl extends AbstractDao<Location, String> {
 
     @Override
+    @Transactional
     public Location get(String id) {
         Location location = sessionFactory.getCurrentSession().find(Location.class, id);
         return location;

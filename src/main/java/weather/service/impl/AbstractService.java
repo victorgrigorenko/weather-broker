@@ -18,27 +18,15 @@ abstract class AbstractService<T,Id> implements AbstractableService<T,Id>{
         abstractDao.saveToDatabase(entity);
     }
 
-    @Transactional
     public T get(Id id){
         T instance = abstractDao.get(id);
         return  instance;
-    }
-
-
-    @Transactional
-    public void delete(T entity){
-        abstractDao.delete(entity);
     }
 
     @Transactional
     public List<T> getAll(){
         List<T> list = abstractDao.getAll();
         return  list;
-    }
-
-    @Transactional
-    public void deleteAll(){
-        abstractDao.deleteAll();
     }
 
 }
